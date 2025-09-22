@@ -1,5 +1,6 @@
 import Fastify from 'fastify';
 import cors from '@fastify/cors';
+import quotesRoute from './routes/quotes';
 
 async function main() {
   const app = Fastify({ logger: true });
@@ -9,6 +10,8 @@ async function main() {
 
   // api health check
   app.get('/api/health', async () => ({ status: 'ok', time: new Date().toISOString() }));
+  // register quotes route
+  await app.register(quotesRoute);
 
   try {
     await app.listen({ port: 8080, host: '0.0.0.0' });
